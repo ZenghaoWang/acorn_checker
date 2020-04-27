@@ -4,6 +4,7 @@ import os
 from typing import Dict
 
 CONFIG_PATH = 'config.json'
+ACORN_URL = 'https://acorn.utoronto.ca'
 
 
 def credentials_not_found(config: Dict[str, str]) -> bool:
@@ -84,7 +85,8 @@ def print_grades(browser) -> None:
         '/html/body/div[2]/div/div[2]/div[2]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[4]/table/tbody/tr/td/table/tbody')
     for row in course_table.find_elements_by_class_name('courses'):
         cols = row.find_elements_by_tag_name('td')
-        print(f'{cols[0].text}: {cols[3].text}')
+        print(
+            f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
 
 
 if __name__ == "__main__":
@@ -93,7 +95,7 @@ if __name__ == "__main__":
         config = parse_config(CONFIG_PATH)
         browser = init_browser()
 
-        browser.get('https://acorn.utoronto.ca')
+        browser.get(ACORN_URL)
         successful = login(browser, config['username'], config['password'])
 
         # Successful login, continue to scrape grades

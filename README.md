@@ -16,6 +16,8 @@ git clone https://github.com/ZenghaoWang/acorn_checker
 python3 -m pip install -r requirements.txt  
 ```
 
+* Install [Chrome WebDriver](https://chromedriver.chromium.org/downloads)
+  
 * Navigate to repo folder and run program
 
 ```bash
