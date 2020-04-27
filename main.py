@@ -1,15 +1,16 @@
 from selenium.webdriver import Chrome, ChromeOptions
-
+from typing import Type
 from config import *
 
-ACORN_URL = 'https://acorn.utoronto.ca'
-MARKS_URL = 'https://acorn.utoronto.ca/sws/#/history/academic'
+ACORN_URL: str = 'https://acorn.utoronto.ca'
+MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
 
 
-def init_browser():
+def init_browser() -> Chrome:
     """
     Initializes and returns a headless chrome webDriver.
     """
+
     print("Initializing WebDriver...")
     options = ChromeOptions()
     options.add_argument('headless')
