@@ -22,6 +22,7 @@ python3 -m pip install -r requirements.txt
 ```
 
 * Navigate to repo folder and run program
+
 ```bash
-python3 main.py 
+python3 main.py
 ```

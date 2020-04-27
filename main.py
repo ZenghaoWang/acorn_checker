@@ -9,7 +9,7 @@ def parse_config(path: str) -> Dict[str, str]:
         return config_dict
 
 
-def login(browser, username: str, password: str) -> void:
+def login(browser, username: str, password: str) -> None:
     username_input = browser.find_element_by_id('username')
     password_input = browser.find_element_by_id('password')
     login_button = browser.find_elements_by_name('_eventId_proceed')[0]
@@ -28,7 +28,7 @@ def init_browser():
     return Chrome(options=options)
 
 
-def print_grades(browser) -> void:
+def print_grades(browser) -> None:
     course_table = browser.find_element_by_xpath(
         '/html/body/div[2]/div/div[2]/div[2]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[4]/table/tbody/tr/td/table/tbody')
     for row in course_table.find_elements_by_class_name('courses'):
