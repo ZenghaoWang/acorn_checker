@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=python
 
 ## Sensitive credentials
-config.json
+*.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
