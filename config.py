@@ -1,7 +1,7 @@
 import json
 import os
 from typing import Dict
-CONFIG_PATH = 'config.json'
+CONFIG_PATH: str = 'config.json'
 
 
 def credentials_not_found(config: Dict[str, str]) -> bool:
