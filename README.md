@@ -33,4 +33,4 @@ python3 main.py
 
 ## License
 
-This project is licensed under the MIT license - See [LICENSE.md](https://github.com/ZenghaoWang/acorn_checker/blob/master/README.md) for details.
+This project is licensed under the MIT license - See [LICENSE.md](https://github.com/ZenghaoWang/acorn_checker/blob/master/LICENSE.md) for details.
