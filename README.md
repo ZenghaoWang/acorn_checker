@@ -1,3 +1,7 @@
+# Sample Text
+
+A simple command-line application which automatically scrapes final marks off of acorn.
+
 ## Usage
 
 * Download repository:
@@ -29,4 +33,4 @@ python3 main.py
 
 ## License
 
-This project is licensed under the MIT license - See [License.md]('https://github.com/ZenghaoWang/acorn_checker/blob/master/LICENSE.md') for details. 
+This project is licensed under the MIT license - See [License.md]('https://github.com/ZenghaoWang/acorn_checker/blob/master/LICENSE.md') for details.
