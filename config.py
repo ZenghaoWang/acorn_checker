@@ -1,11 +1,11 @@
 import json
 import os
-from typing import Dict
+from typing import Dict, List
 
 CONFIG_PATH: str = 'config.json'
 DEFAULT_CONFIG: Dict[str, str] = {
     "username": "None", "password": "None", "flag": "None"}
-
+FLAGS: List[str] = ['f', 'w', 'a']
 
 def json_to_dict() -> Dict[str, str]:
     """Returns a dict from config.json, or the default config if config.json dne
@@ -23,7 +23,7 @@ def dict_to_json(config: Dict[str, str] = {}) -> None:
     Writes config to config.json, or creates a default config.json if no arg is provided.
     """
     if not config:
-        _ = {"username": "None", "password": "None", "flag": "None"}
+        _ = DEFAULT_CONFIG
     else:
         _ = config
     with open(CONFIG_PATH, 'w') as f:
@@ -76,7 +76,7 @@ def add_flag_pref() -> None:
     """Prompt the user for a default flag to use and store it in config.json.
     """
     flag = ""
-    while flag not in ['f', 'w', 'a']:
+    while flag not in FLAGS:
         flag = input(
             """What would you like this program to scrape when no flags are passed?
             Options: 
