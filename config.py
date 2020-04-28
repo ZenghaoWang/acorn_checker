@@ -4,6 +4,22 @@ from typing import Dict
 CONFIG_PATH: str = 'config.json'
 
 
+def reset_credentials(path: str) -> None:
+    if os.path.isfile(path):
+        with open(path, 'r+') as f:
+            config = json.load(f)
+
+        config['username'] = 'None'
+        config['password'] = 'None'
+        with open(path, 'w') as f:
+            json.dump(config, f)
+
+        print("Credentials successfully deleted.")
+
+    else:
+        print("No config.json file found.")
+
+
 def credentials_not_found(config: Dict[str, str]) -> bool:
     return config.get('username', 'None') == 'None' or config.get('password', 'None') == 'None'
 

@@ -9,14 +9,18 @@ def get_parser() -> argparse.ArgumentParser:
 
     desc = 'Scrapes final marks from Acorn.'
     parser = argparse.ArgumentParser(description=desc)
+    group = parser.add_mutually_exclusive_group()
 
-    parser.add_argument(
-        '-w', '--winter', help='Scrape marks for winter (Jan - April) semester', action='store_true', default=False)
-    parser.add_argument(
-        '-f', '--fall', help='Scrape marks for fall (Sept - Dec) semester', action='store_true', default=False)
-    parser.add_argument(
-        '-s', '--summer', help='Scrape marks for summer (May - August semester)', action='store_true', default=False)
-    parser.add_argument(
-        '-a', '--all', help='Scrape all marks', action='store_true', default=False)
+    group.add_argument(
+        '-w', '--winter', help='Scrape marks for winter (Jan - April) semester', action='store_true')
+    group.add_argument(
+        '-f', '--fall', help='Scrape marks for fall (Sept - Dec) semester', action='store_true')
+    group.add_argument(
+        '-s', '--summer', help='Scrape marks for summer (May - August semester)', action='store_true', default=True)
+    group.add_argument(
+        '-a', '--all', help='Scrape all marks', action='store_true')
+
+    group.add_argument(
+        '-r', '--reset', help='Reset credentials and exit', action='store_true')
 
     return parser

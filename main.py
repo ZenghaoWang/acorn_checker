@@ -1,7 +1,7 @@
 from selenium.webdriver import Chrome, ChromeOptions
 from typing import Type
 
-from config import *
+import config as cfg
 from args import get_parser
 
 ACORN_URL: str = 'https://acorn.utoronto.ca'
@@ -49,11 +49,16 @@ def print_grades(browser) -> None:
 
 
 if __name__ == "__main__":
+    # Parse command line args
     parser = get_parser()
-    parser.parse_args()
+    args = parser.parse_args()
+
+    if args.reset:
+        cfg.reset_credentials(cfg.CONFIG_PATH)
+        exit()
 
     while True:
-        config = parse_config(CONFIG_PATH)
+        config = cfg.parse_config(cfg.CONFIG_PATH)
         browser = init_browser()
 
         browser.get(ACORN_URL)
@@ -65,7 +70,7 @@ if __name__ == "__main__":
 
         # Credentials are incorrect; Prompt user for credentials
         else:
-            add_credentials_to_config(CONFIG_PATH)
+            cfg.add_credentials_to_config(cfg.CONFIG_PATH)
 
     # Printing winter session marks
     browser.get(MARKS_URL)
