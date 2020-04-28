@@ -1,4 +1,5 @@
 from selenium.webdriver import Chrome, ChromeOptions
+from selenium.common.exceptions import NoSuchElementException
 from typing import List
 
 import config as cfg
@@ -43,24 +44,29 @@ def login(browser: Chrome, username: str, password: str) -> bool:
 
 
 def print_grades(browser: Chrome, fall: bool, winter: bool) -> None:
-    if fall:
-        fall_table = browser.find_element_by_xpath(
-            FALL_MARKS_XPATH)
+    try:
+        if fall:
+            fall_table = browser.find_element_by_xpath(
+                FALL_MARKS_XPATH)
 
-        print("Fall Semester:")
-        for row in fall_table.find_elements_by_class_name('courses'):
-            cols = row.find_elements_by_tag_name('td')
-            print(
-                f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
+            print("Fall Semester:")
+            for row in fall_table.find_elements_by_class_name('courses'):
+                cols = row.find_elements_by_tag_name('td')
+                print(
+                    f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
 
-    if winter:
-        winter_table = browser.find_element_by_xpath(
-            WINTER_MARKS_XPATH)
-        print("Winter Semester:")
-        for row in winter_table.find_elements_by_class_name('courses'):
-            cols = row.find_elements_by_tag_name('td')
-            print(
-                f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
+        if winter:
+            winter_table = browser.find_element_by_xpath(
+                WINTER_MARKS_XPATH)
+            print("Winter Semester:")
+            for row in winter_table.find_elements_by_class_name('courses'):
+                cols = row.find_elements_by_tag_name('td')
+                print(
+                    f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
+
+    except NoSuchElementException:
+        print("An error occured. Please try again.")
+        exit()
 
 
 if __name__ == "__main__":
