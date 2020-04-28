@@ -1,11 +1,14 @@
 from selenium.webdriver import Chrome, ChromeOptions
-from typing import Type
+from typing import List
 
 import config as cfg
 from args import get_parser
 
 ACORN_URL: str = 'https://acorn.utoronto.ca'
 MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
+
+FALL_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[3]/table/tbody/tr[2]/td/table/tbody'
+WINTER_MARKS_XPATH = '/html/body/div[2]/div/div[2]/div[2]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[4]/table/tbody/tr/td/table/tbody'
 
 
 def init_browser() -> Chrome:
@@ -40,12 +43,24 @@ def login(browser: Chrome, username: str, password: str) -> bool:
 
 
 def print_grades(browser: Chrome, fall: bool, winter: bool) -> None:
-    course_table_winter = browser.find_element_by_xpath(
-        '/html/body/div[2]/div/div[2]/div[2]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[4]/table/tbody/tr/td/table/tbody')
-    for row in course_table_winter.find_elements_by_class_name('courses'):
-        cols = row.find_elements_by_tag_name('td')
-        print(
-            f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
+    if fall:
+        fall_table = browser.find_element_by_xpath(
+            FALL_MARKS_XPATH)
+
+        print("Fall Semester:")
+        for row in fall_table.find_elements_by_class_name('courses'):
+            cols = row.find_elements_by_tag_name('td')
+            print(
+                f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
+
+    if winter:
+        winter_table = browser.find_element_by_xpath(
+            WINTER_MARKS_XPATH)
+        print("Winter Semester:")
+        for row in winter_table.find_elements_by_class_name('courses'):
+            cols = row.find_elements_by_tag_name('td')
+            print(
+                f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }')
 
 
 if __name__ == "__main__":
@@ -72,8 +87,12 @@ if __name__ == "__main__":
         else:
             cfg.add_credentials_to_config(cfg.CONFIG_PATH)
 
-    # Printing winter session marks
     browser.get(MARKS_URL)
-    print_grades(browser, fall=args.fall, winter=args.winter)
+    if not any(vars(args).values()):  # No flags
+        print_grades(browser, fall=True, winter=True)
+
+    else:
+        print_grades(browser, fall=(args.all or args.fall),
+                     winter=(args.all or args.winter))
 
     browser.close()
