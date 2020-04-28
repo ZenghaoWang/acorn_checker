@@ -1,6 +1,8 @@
 from selenium.webdriver import Chrome, ChromeOptions
 from typing import Type
+
 from config import *
+from args import get_parser
 
 ACORN_URL: str = 'https://acorn.utoronto.ca'
 MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
@@ -25,7 +27,6 @@ def login(browser, username: str, password: str) -> bool:
     password_input = browser.find_element_by_id('password')
     login_button = browser.find_elements_by_name('_eventId_proceed')[0]
 
-    config = parse_config('config.json')
     username_input.send_keys(username)
     password_input.send_keys(password)
     login_button.click()
@@ -48,6 +49,8 @@ def print_grades(browser) -> None:
 
 
 if __name__ == "__main__":
+    parser = get_parser()
+    parser.parse_args()
 
     while True:
         config = parse_config(CONFIG_PATH)

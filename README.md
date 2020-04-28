@@ -2,7 +2,7 @@
 
 A simple command-line application which automatically scrapes final marks off of acorn.
 
-## Usage
+## Installation
 
 * Download repository:
 
@@ -18,11 +18,16 @@ python3 -m pip install -r requirements.txt
 
 * Install [Chrome WebDriver](https://chromedriver.chromium.org/downloads)
   
+## Usage
+  
 * Navigate to repo folder and run program
 
 ```bash
 python3 main.py
+python3 main.py -h # Help
 ```
+
+
 
 ## License
 
