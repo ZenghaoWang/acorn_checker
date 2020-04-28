@@ -1,6 +1,6 @@
 # Sample Text
 
-A simple command-line application which scrapes final marks off of acorn.
+A simple command-line application which scrapes final marks off of acorn. Credentials are stored locally inside config.json.
 
 ## Installation
 
@@ -29,6 +29,7 @@ python3 main.py -f # Show fall marks
 python3 main.py -w # Show winter marks
 python3 main.py -a # Show all marks
 python3 main.py -r # Reset credentials
+python3 main.py -c # Config default no-flag behavior
 ```
 
 ## Disclaimer

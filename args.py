@@ -22,5 +22,7 @@ def get_parser() -> argparse.ArgumentParser:
 
     group.add_argument(
         '-r', '--reset', help='Reset credentials and exit', action='store_true')
+    group.add_argument(
+        '-c', '--config', help='Configure default behavior when no flags are used', action='store_true')
 
     return parser

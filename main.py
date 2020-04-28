@@ -43,7 +43,7 @@ def login(browser: Chrome, username: str, password: str) -> bool:
     return True
 
 
-def print_grades(browser: Chrome, fall: bool, winter: bool) -> None:
+def print_grades(browser: Chrome, fall: bool = False, winter: bool = False) -> None:
     try:
         if fall:
             fall_table = browser.find_element_by_xpath(
@@ -74,12 +74,16 @@ if __name__ == "__main__":
     parser = get_parser()
     args = parser.parse_args()
 
+    if args.config:
+        cfg.add_flag_pref()
+        exit()
+
     if args.reset:
-        cfg.reset_credentials(cfg.CONFIG_PATH)
+        cfg.reset_credentials()
         exit()
 
     while True:
-        config = cfg.parse_config(cfg.CONFIG_PATH)
+        config = cfg.parse_config()
         browser = init_browser()
 
         browser.get(ACORN_URL)
@@ -91,11 +95,23 @@ if __name__ == "__main__":
 
         # Credentials are incorrect; Prompt user for credentials
         else:
-            cfg.add_credentials_to_config(cfg.CONFIG_PATH)
+            cfg.add_credentials_to_config()
 
     browser.get(MARKS_URL)
-    if not any(vars(args).values()):  # No flags
-        print_grades(browser, fall=True, winter=True)
+
+    fl = config['flag']
+    # No flags
+    # If default flag stored in config, use that.
+    # Otherwise, print all
+    if not any(vars(args).values()):
+        if fl == "f":
+            print_grades(browser, fall=True)
+        elif fl == "w":
+            print_grades(browser, winter=True)
+        elif fl == "a":
+            print_grades(browser, fall=True, winter=True)
+        else:
+            print_grades(browser, fall=True, winter=True)
 
     else:
         print_grades(browser, fall=(args.all or args.fall),
