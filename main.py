@@ -12,7 +12,7 @@ FALL_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic/d
 WINTER_MARKS_XPATH = '/html/body/div[2]/div/div[2]/div[2]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[4]/table/tbody/tr/td/table/tbody'
 
 
-def init_browser() -> Chrome:
+def init_browser(url: str) -> Chrome:
     """
     Initializes and returns a headless chrome webDriver.
     """
@@ -22,7 +22,9 @@ def init_browser() -> Chrome:
     options.add_argument('headless')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-    return Chrome(options=options)
+    browser = Chrome(options=options)
+    browser.get(url)
+    return browser
 
 
 def login(browser: Chrome, username: str, password: str) -> bool:
@@ -84,9 +86,8 @@ if __name__ == "__main__":
 
     while True:
         config = cfg.parse_config()
-        browser = init_browser()
+        browser = init_browser(ACORN_URL)
 
-        browser.get(ACORN_URL)
         successful = login(browser, config['username'], config['password'])
 
         # Successful login, continue to scrape grades
