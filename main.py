@@ -7,15 +7,13 @@ from quercus import print_published_courses
 from acorn import print_grades
 
 ACORN_URL: str = 'https://acorn.utoronto.ca'
-MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
 
 QUERCUS_URL: str = 'https://q.utoronto.ca'
-COURSES_URL: str = "https://q.utoronto.ca/courses"
 
 
-def init_browser(url: str) -> Chrome:
+def init_browser() -> Chrome:
     """
-    Initializes and returns a headless chrome webDriver at <url>.
+    Initializes and returns a headless chrome webDriver 
     """
 
     print("Initializing WebDriver...")
@@ -23,9 +21,7 @@ def init_browser(url: str) -> Chrome:
     options.add_argument('headless')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-    browser = Chrome(options=options)
-    browser.get(url)
-    return browser
+    return Chrome(options=options)
 
 
 def login(browser: Chrome, username: str, password: str) -> bool:
@@ -46,7 +42,8 @@ def login(browser: Chrome, username: str, password: str) -> bool:
     return True
 
 
-def login_loop(browser: Chrome) -> Dict[str, str]:
+def login_loop(browser: Chrome, url: str) -> Dict[str, str]:
+    browser.get(url)
     while True:
         config = cfg.parse_config()
 
@@ -72,18 +69,15 @@ if __name__ == "__main__":
         cfg.reset_credentials()
         exit()
 
-    if args.published:
-        browser = init_browser(QUERCUS_URL)
-        config = login_loop(browser)
-        browser.get(COURSES_URL)
+    if args.published:  # Get published courses
+        browser = init_browser()
+        config = login_loop(browser, QUERCUS_URL)
         print_published_courses(browser)
 
-    else:
-        browser = init_browser(ACORN_URL)
+    else:  # Scrape marks
+        browser = init_browser()
         # Attempt to login until successful
-        config = login_loop(browser)
-
-        browser.get(MARKS_URL)
+        config = login_loop(browser, ACORN_URL)
 
         fl = config['flag']
         # No flags

@@ -7,7 +7,7 @@ def get_parser() -> ArgumentParser:
     Call its method parse_args() to use.
     '''
 
-    desc = 'Scrapes final marks from Acorn. With no flags, the default behavior is to scrape both fall and winter marks.'
+    desc = 'Scrapes final marks from Acorn. With no flags, the default behavior is to scrape both fall and winter marks.\n Use -p flag to scrape published courses from quercus instead.'
     parser: ArgumentParser = ArgumentParser(description=desc)
     semester = parser.add_mutually_exclusive_group()
     options = parser.add_mutually_exclusive_group()
