@@ -1,0 +1,62 @@
+{
+    "type": "object",
+    "title": "Settings",
+    "default": {},
+    "additionalProperties": true,
+    "required": [
+        "username",
+        "password",
+        "defaultFlags"
+    ],
+    "properties": {
+        "username": {
+            "$id": "#/properties/username",
+            "type": "string",
+            "description": "A UTORID username",
+            "default": "None"
+        },
+        "password": {
+            "$id": "#/properties/password",
+            "type": "string",
+            "description": "A UTORID password",
+            "default": "None"
+        },
+        "defaultFlags": {
+            "$id": "#/properties/defaultFlags",
+            "type": "object",
+            "description": "When a semester flag is not included, use these",
+            "default": {},
+            "additionalProperties": true,
+            "required": [
+                "marks",
+                "courses"
+            ],
+            "properties": {
+                "marks": {
+                    "$id": "#/properties/defaultFlags/properties/marks",
+                    "type": "string",
+                    "description": "Which semester to scrape marks from",
+                    "default": "None",
+                    "examples": [
+                        "f",
+                        "w",
+                        "s",
+                        "a"
+                    ]
+                },
+                "courses": {
+                    "$id": "#/properties/defaultFlags/properties/courses",
+                    "type": "string",
+                    "description": "Which semester to scrape published course pages from",
+                    "default": "None",
+                    "examples": [
+                        "f",
+                        "w",
+                        "s",
+                        "a"
+                    ]
+                }
+            }
+        }
+    }
+}

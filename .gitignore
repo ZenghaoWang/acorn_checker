@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=python
 
 ## Sensitive credentials
-*.json
+config.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -111,3 +111,5 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/python
+
+.vscode
