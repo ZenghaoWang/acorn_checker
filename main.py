@@ -79,7 +79,15 @@ if __name__ == "__main__":
         elif args.summer:
             semester = "Summer"
         else:
-            semester = ""
+            fl = config['defaultFlags']['courses']
+            if fl == 'None':
+                semester = ""
+            elif fl == "w":
+                semester = "Winter"
+            elif fl == "s":
+                semester = "Summer"
+            elif fl == "f":
+                semester = "Fall"
         print_published_courses(browser, semester)
 
     else:  # Scrape marks
@@ -87,7 +95,7 @@ if __name__ == "__main__":
         # Attempt to login until successful
         config = login_loop(browser, ACORN_URL)
 
-        fl = config['flag']
+        fl = config['defaultFlags']['marks']
         # No flags
         # If default flag stored in config, use that.
         # Otherwise, print all

@@ -1,11 +1,18 @@
 import json
 import os
-from typing import Dict, List
+from typing import Dict, List, Union
 
 CONFIG_PATH: str = 'config.json'
-DEFAULT_CONFIG: Dict[str, str] = {
-    "username": "None", "password": "None", "flag": "None"}
-FLAGS: List[str] = ['f', 'w', 'a']
+DEFAULT_CONFIG: Dict[str, Union[str, dict]] = {
+    "username": "None",
+    "password": "None",
+    "defaultFlags": {
+        "marks": "None",
+        "courses": "None"
+    }
+}
+FLAGS: List[str] = ['f', 'w', 'a', 's']
+
 
 def json_to_dict() -> Dict[str, str]:
     """Returns a dict from config.json, or the default config if config.json dne
@@ -75,21 +82,37 @@ def add_credentials_to_config() -> Dict[str, str]:
 def add_flag_pref() -> None:
     """Prompt the user for a default flag to use and store it in config.json.
     """
-    flag = ""
-    while flag not in FLAGS:
-        flag = input(
-            """What would you like this program to scrape when no flags are passed?
+    marks_flag = ""
+    while marks_flag not in FLAGS:
+        marks_flag = input(
+            """
+            What would you like this program to scrape when no flags are passed?
             Options: 
             \tf: Fall semester marks
             \tw: Winter semester marks
             \ta: Both semesters
-        """)
+            """
+        )
+
+    courses_flag = ""
+    while courses_flag not in FLAGS:
+        courses_flag = input(
+            """
+            What would you like this program to scrape when the '-p' flag is used? 
+            Options:
+            \tf: Fall semester published course pages
+            \tw: Winter semester published course pages
+            \ts: Summer semester published course pages
+            \ta: All semesters
+            """
+        )
 
     if not os.path.isfile(CONFIG_PATH):
         dict_to_json()
 
     config = json_to_dict()
-    config["flag"] = flag
+    config["defaultFlags"]['marks'] = marks_flag
+    config["defaultFlags"]["courses"] = courses_flag
     dict_to_json(config)
     print("Default behavior changed.")
 
