@@ -72,7 +72,15 @@ if __name__ == "__main__":
     if args.published:  # Get published courses
         browser = init_browser()
         config = login_loop(browser, QUERCUS_URL)
-        print_published_courses(browser)
+        if args.fall:
+            semester = "Fall"
+        elif args.winter:
+            semester = "Winter"
+        elif args.summer:
+            semester = "Summer"
+        else:
+            semester = ""
+        print_published_courses(browser, semester)
 
     else:  # Scrape marks
         browser = init_browser()

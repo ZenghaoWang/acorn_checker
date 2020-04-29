@@ -34,12 +34,11 @@ python3 main.py -c # Config default no-flag behavior
 
 ### Published courses
 
-Use the -p flag to instead output a list of course pages that have been published for the current semester.
-
-- NOTE: Currently only works for summer 2020
+Use the -p flag to instead output a list of course pages that have been published for a given semester.
 
 ```bash
-python3 main.py -p
+python3 main.py -p # Returns all published course pages
+python3 main.py -p -s # Returns all published summer course pages
 ```
 
 ## Disclaimer
