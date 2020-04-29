@@ -13,6 +13,8 @@ def print_published_courses(browser: Chrome, semester: str) -> None:
     browser.get(COURSES_URL)
     table = browser.find_element_by_id("my_courses_table")
     rows: list = table.find_elements_by_class_name("course-list-table-row")
+
+    # Courses in <semester> that are published
     published: list = list(
         filter(lambda row: is_published(row, semester), rows))
 
