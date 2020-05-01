@@ -106,11 +106,13 @@ if __name__ == "__main__":
                 print_grades(browser, winter=True)
             elif fl == "a":
                 print_grades(browser, fall=True, winter=True)
+            elif fl == "s":
+                print_grades(browser, summer=True)
             else:
-                print_grades(browser, fall=True, winter=True)
+                print_grades(browser, fall=True, winter=True, summer=True)
 
         else:
             print_grades(browser, fall=(args.all or args.fall),
-                         winter=(args.all or args.winter))
+                         winter=(args.all or args.winter), summer=(args.all or args.summer))
 
     browser.close()
