@@ -115,4 +115,4 @@ if __name__ == "__main__":
             print_grades(browser, fall=(args.all or args.fall),
                          winter=(args.all or args.winter), summer=(args.all or args.summer))
 
-    browser.close()
+    browser.quit()
