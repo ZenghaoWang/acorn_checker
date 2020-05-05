@@ -13,9 +13,14 @@ SUMMER_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic
 
 
 def print_grades_helper(web_table) -> None:
+    """Formats and prints a table.
+
+    Args:
+        web_table (WebElement): html table
+    """
     console = Console()
 
-    table = Table(show_header=True, header_style="bold magenta")
+    table = Table(show_header=True, header_style="blue")
     table.add_column("Course", style="dim")
     table.add_column("Mark")
     table.add_column("Grade")
@@ -24,12 +29,18 @@ def print_grades_helper(web_table) -> None:
     courses = web_table.find_elements_by_class_name('courses')
     for row in courses:
         cols = row.find_elements_by_tag_name('td')
-        table.add_row(
-            cols[0].text, cols[3].text if cols[3].text else "N/A", "[red]IPR[/red]" if cols[4].text == "IPR" else cols[4].text, cols[2].text)
+
+        course, credit = cols[0].text, cols[2].text
+        mark = cols[3].text if cols[3].text else "N/A"
+        grade = "[red]IPR[/red]" if cols[4].text == "IPR" else f"[cyan]{cols[4].text}[/cyan]"
+
+        table.add_row(course, mark, grade, credit)
+
     console.print(table)
 
 
 def print_grades(browser: Chrome, fall: bool = False, winter: bool = False, summer: bool = False) -> None:
+    print("Getting grades...")
     browser.get(MARKS_URL)
     try:
         if fall:

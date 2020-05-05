@@ -7,7 +7,6 @@ from quercus import print_published_courses
 from acorn import print_grades
 
 ACORN_URL: str = 'https://acorn.utoronto.ca'
-
 QUERCUS_URL: str = 'https://q.utoronto.ca'
 
 
@@ -15,13 +14,13 @@ def init_browser() -> Chrome:
     """
     Initializes and returns a headless chrome webDriver 
     """
-
-    print("Initializing WebDriver...")
+    print("Initializing Chrome Webdriver...")
     options = ChromeOptions()
     options.add_argument('headless')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-
-    return Chrome(options=options)
+    browser = Chrome(options=options)
+    print("Webdriver Initialized.")
+    return browser
 
 
 def login(browser: Chrome, username: str, password: str) -> bool:
