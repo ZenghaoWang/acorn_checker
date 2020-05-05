@@ -1,5 +1,6 @@
 from selenium.webdriver import Chrome, ChromeOptions
 from typing import List, Dict
+from rich import print
 
 import config as cfg
 from args import get_parser
@@ -14,7 +15,7 @@ def init_browser() -> Chrome:
     """
     Initializes and returns a headless chrome webDriver 
     """
-    print("Initializing Chrome Webdriver...")
+    print("[blue]Initializing[/blue] Chrome Webdriver...")
     options = ChromeOptions()
     options.add_argument('headless')
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -24,7 +25,7 @@ def init_browser() -> Chrome:
 
 
 def login(browser: Chrome, username: str, password: str) -> bool:
-    print("Logging in...")
+    print("[green]Logging[/green] in...")
     username_input = browser.find_element_by_id('username')
     password_input = browser.find_element_by_id('password')
     login_button = browser.find_elements_by_name('_eventId_proceed')[0]

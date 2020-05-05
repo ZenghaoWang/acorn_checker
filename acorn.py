@@ -3,7 +3,7 @@ from selenium.webdriver import Chrome
 from selenium.common.exceptions import NoSuchElementException
 from rich.console import Console
 from rich.table import Column, Table
-
+from rich import print
 
 MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
 
@@ -32,7 +32,7 @@ def print_grades_helper(web_table) -> None:
 
         course, credit = cols[0].text, cols[2].text
         mark = cols[3].text if cols[3].text else "N/A"
-        grade = "[red]IPR[/red]" if cols[4].text == "IPR" else f"[cyan]{cols[4].text}[/cyan]"
+        grade = "[red]IPR[/red]" if cols[4].text == "IPR" else f"[green]{cols[4].text}[/green]"
 
         table.add_row(course, mark, grade, credit)
 
@@ -40,7 +40,7 @@ def print_grades_helper(web_table) -> None:
 
 
 def print_grades(browser: Chrome, fall: bool = False, winter: bool = False, summer: bool = False) -> None:
-    print("Getting grades...")
+    print("[cyan]Getting grades[/cyan]...")
     browser.get(MARKS_URL)
     try:
         if fall:
