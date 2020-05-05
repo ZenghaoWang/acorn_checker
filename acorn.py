@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 from rich.console import Console
 from rich.table import Column, Table
 from rich import print
+from rich.progress import track
 
 MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
 
@@ -12,7 +13,7 @@ WINTER_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic
 SUMMER_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[5]/table/tbody/tr/td/table/tbody'
 
 
-def print_grades_helper(web_table) -> None:
+def print_grades_helper(web_table, title: str) -> None:
     """Formats and prints a table.
 
     Args:
@@ -20,7 +21,7 @@ def print_grades_helper(web_table) -> None:
     """
     console = Console()
 
-    table = Table(show_header=True, header_style="blue")
+    table = Table(show_header=True, header_style="blue", title=title)
     table.add_column("Course", style="dim")
     table.add_column("Mark")
     table.add_column("Grade")
@@ -45,18 +46,15 @@ def print_grades(browser: Chrome, fall: bool = False, winter: bool = False, summ
     try:
         if fall:
             fall_table = browser.find_element_by_xpath(FALL_MARKS_XPATH)
-            print("Fall Semester Marks:")
-            print_grades_helper(fall_table)
+            print_grades_helper(fall_table, "Fall Semester Grades")
 
         if winter:
             winter_table = browser.find_element_by_xpath(WINTER_MARKS_XPATH)
-            print("Winter Semester Marks:")
-            print_grades_helper(winter_table)
+            print_grades_helper(winter_table, "Winter Semester Grades")
 
         if summer:
             summer_table = browser.find_element_by_xpath(SUMMER_MARKS_XPATH)
-            print("Summer Semester Marks:")
-            print_grades_helper(summer_table)
+            print_grades_helper(summer_table, "Summer Semester Grades")
 
     except NoSuchElementException:
         print("An error occured. Please try again.")

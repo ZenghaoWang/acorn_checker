@@ -1,6 +1,7 @@
 from selenium.webdriver import Chrome, ChromeOptions
 from typing import List, Dict
 from rich import print
+from rich.progress import Progress
 
 import config as cfg
 from args import get_parser
