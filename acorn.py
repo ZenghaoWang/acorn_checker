@@ -16,7 +16,7 @@ def print_grades_helper(table) -> None:
     for row in courses:
         cols = row.find_elements_by_tag_name('td')
         print(
-            f'{cols[0].text}: {cols[3].text if cols[3].text else "No mark available" }'
+            f'{cols[0].text}: {cols[3].text} {cols[4].text}'
         )
 
 

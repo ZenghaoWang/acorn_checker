@@ -2,7 +2,7 @@ import json
 import os
 from typing import Dict, List, Union
 
-CONFIG_PATH: str = './.config/config.json'
+CONFIG_PATH: str = os.path.join(os.path.dirname(__file__), './.config/config.json')
 DEFAULT_CONFIG: Dict[str, Union[str, dict]] = {
     "username": "None",
     "password": "None",
