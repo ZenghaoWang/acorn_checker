@@ -25,7 +25,7 @@ def print_grades_helper(web_table) -> None:
     for row in courses:
         cols = row.find_elements_by_tag_name('td')
         table.add_row(
-            cols[0].text, cols[3].text if cols[3].text else "[red]N/A[/red]", cols[4].text, cols[2].text)
+            cols[0].text, cols[3].text if cols[3].text else "N/A", "[red]IPR[/red]" if cols[4].text == "IPR" else cols[4].text, cols[2].text)
     console.print(table)
 
 
