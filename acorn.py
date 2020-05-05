@@ -1,7 +1,8 @@
 
 from selenium.webdriver import Chrome
-
 from selenium.common.exceptions import NoSuchElementException
+from rich.console import Console
+from rich.table import Column, Table
 
 
 MARKS_URL: str = 'https://acorn.utoronto.ca/sws/#/history/academic'
@@ -11,13 +12,21 @@ WINTER_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic
 SUMMER_MARKS_XPATH = '//*[@id="main-content"]/div[2]/div[1]/div/history-academic/div/div[2]/div/div[5]/table/tbody/tr/td/table/tbody'
 
 
-def print_grades_helper(table) -> None:
-    courses = table.find_elements_by_class_name('courses')
+def print_grades_helper(web_table) -> None:
+    console = Console()
+
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Course", style="dim")
+    table.add_column("Mark")
+    table.add_column("Grade")
+    table.add_column("Credits")
+
+    courses = web_table.find_elements_by_class_name('courses')
     for row in courses:
         cols = row.find_elements_by_tag_name('td')
-        print(
-            f'{cols[0].text}: {cols[3].text} {cols[4].text}'
-        )
+        table.add_row(
+            cols[0].text, cols[3].text if cols[3].text else "[red]N/A[/red]", cols[4].text, cols[2].text)
+    console.print(table)
 
 
 def print_grades(browser: Chrome, fall: bool = False, winter: bool = False, summer: bool = False) -> None:

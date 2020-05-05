@@ -90,7 +90,8 @@ def add_flag_pref() -> None:
             Options: 
             \tf: Fall semester marks
             \tw: Winter semester marks
-            \ta: Both semesters
+            \ts: Summer semester marks 
+            \ta: All semesters
             """
         )
 
